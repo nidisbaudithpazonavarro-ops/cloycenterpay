@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loader Extraído - Banco de Bogotá</title>
+    <style>
+        :root {
+            /* PARÁMETROS ANIMACIÓN */
+            --bg-dark-loader: rgb(0 44 109 / 85%); 
+            --dot-size: 32px;
+            --travel-dist: 45px;
+            --cyan: #00e5ff;
+            --yellow: #ffeb3b;
+            --red: #ff3d00;
+            --intro-duration: 2.5s;
+            --loop-speed: 1.8s;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #f0f0f0; /* Fondo base para ver el contraste */
+        }
+
+        /* --- CONTENEDOR PRINCIPAL (OVERLAY) --- */
+        #loader-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: var(--bg-dark-loader); 
+            display: flex; /* Cambiado a flex para verlo inmediatamente */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .loader-scene {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dots-wrapper {
+            position: relative;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            animation: global-rotate var(--loop-speed) linear infinite;
+            animation-delay: var(--intro-duration);
+        }
+
+        .dot {
+            position: absolute;
+            width: var(--dot-size);
+            height: var(--dot-size);
+            border-radius: 50%;
+            transform: scale(0);
+        }
+
+        .cyan   { background-color: var(--cyan); z-index: 3; }
+        .yellow { background-color: var(--yellow); z-index: 2; }
+        .red    { background-color: var(--red); z-index: 1; }
+
+        .fixed-shadow {
+            position: absolute;
+            bottom: 30px;
+            width: calc(var(--dot-size) * 1.5);
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            filter: blur(5px);
+            z-index: 1;
+            transform: scale(0);
+        }
+
+        .loader-text {
+            color: white;
+            margin-top: 13px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* --- ANIMACIONES --- */
+        @keyframes global-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        @keyframes intro-cyan {
+            0%   { transform: scale(0) translateY(-100px); }
+            20%  { transform: scale(1) translateY(0); }
+            40%  { transform: scale(1) translateY(-30px); }
+            60%  { transform: scale(1) translateY(0); }
+            80%  { transform: scale(1) translateY(-15px); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+
+        @keyframes intro-yellow { 0%, 65% { transform: scale(0); } 85% { transform: scale(1) translate(-20px, 0); } 100% { transform: scale(1) translate(0, 0); } }
+        @keyframes intro-red { 0%, 85% { transform: scale(0); } 100% { transform: scale(1) translate(0, 0); } }
+
+        @keyframes move-cyan { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0, calc(-1 * var(--travel-dist))); } }
+        @keyframes move-yellow { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(calc(-0.866 * var(--travel-dist)), calc(0.5 * var(--travel-dist))); } }
+        @keyframes move-red { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(calc(0.866 * var(--travel-dist)), calc(0.5 * var(--travel-dist))); } }
+
+        @keyframes shadow-pulse {
+            0%, 15% { transform: scale(0); opacity: 0; }
+            20%, 60%, 100% { transform: scale(1.1); opacity: 1; }
+            40%, 80% { transform: scale(0.6); opacity: 0.3; }
+        }
+    </style>
+</head>
+<body onload="runLoader();">
+
+    <div id="loader-overlay">
+        <div class="loader-scene">
+            <div class="dots-wrapper">
+                <div class="dot cyan"></div>
+                <div class="dot yellow"></div>
+                <div class="dot red"></div>
+            </div>
+            <div class="fixed-shadow"></div>
+        </div>
+        <p class="loader-text">Espera un momento, por favor</p>
+    </div>
+
+    <script>
+        function runLoader() {
+            const cyan = document.querySelector('.cyan');
+            const yellow = document.querySelector('.yellow');
+            const red = document.querySelector('.red');
+            const shadow = document.querySelector('.fixed-shadow');
+
+            // Lanzar animaciones automáticamente al cargar
+            cyan.style.animation = "intro-cyan 2.5s ease-out forwards, move-cyan 1.8s cubic-bezier(0.7, 0, 0.3, 1) infinite 2.5s";
+            yellow.style.animation = "intro-yellow 2.5s ease-out forwards, move-yellow 1.8s cubic-bezier(0.7, 0, 0.3, 1) infinite 2.5s";
+            red.style.animation = "intro-red 2.5s ease-out forwards, move-red 1.8s cubic-bezier(0.7, 0, 0.3, 1) infinite 2.5s";
+            shadow.style.animation = "shadow-pulse 2.5s ease-out forwards";
+        }
+    </script>
+</body>
+</html>

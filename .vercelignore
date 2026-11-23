@@ -1,0 +1,4 @@
+backups/
+security/
+/*.png
+.env*

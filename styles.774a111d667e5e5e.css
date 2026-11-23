@@ -1,0 +1,102 @@
+@import"https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap";@import"https://fonts.googleapis.com/css?family=Roboto";@import"https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap";@charset "UTF-8";:root{--class-black: #2b2b2b;--class-primary: #0b7dbb;--class-secondary: #5dbaeb;--class-third: #001635;--class-gray-dark: #b3b3b3;--class-white: #ffffff;--class-gray-light: #f4f4f4;--class-bg-blue-light: #f0faff;--class-bg-gray-light: #f4f4f4;--class-bg-gray-200: #f0f0f0;--class-fourth: #314b70;--class-green: #009340;--class-fourth-opacity: #314b7080;--class-red: #e62f27;--class-green-b: #009a48;--class-blue-light-bocc: #008acc;--class-blue-bdb: #14327d;--class-red-avv: #e1081e;--class-orange: #fc7121;--class-blue-dark-bocc: #002449;--class-yelllow-bdb: #ffc10b;--class-blue-avv: #0048db;--class-yellow-100: #fed061;--class-pink-100: #f6af8c;--class-purple-100: #8e9ed1;--class-blue-light-100: #88c1dc;--boxshadow-dp1: 0px 4px 4px 0px rgb(179, 179, 179, .8);--boxshadow-dp2: 0px 6px 8px 0px rgb(179, 179, 179, .8);--boxshadow-dp3: 0px 8px 10px 2px rgb(179, 179, 179, .8);--boxshadow-dp4: 0px 8px 10px 2px rgb(179, 179, 179, .4);--boxshadow-dp5: 0px 14px 12px 2px rgb(179, 179, 179, .2);--boxshadow-dp6: 0px -4px 8px 4px rgb(179, 179, 179, .4);--boxshadow-dp7: 0px 4px 8px 4px rgb(179, 179, 179, .4);--boxshadow-dp8: 0px 4px 4px 0px rgb(179, 179, 179, .4);--blue-primary: #4882b1;--blue-secondary: #5dbaeb;--blue-four: #59b0e0;--blue-selected: #b5dff7;--blue-pagination: #0067ab;--blue-checkbox: #238eff;--background-primary: #ffffff;--background-gradient: linear-gradient(to bottom, #5dbaeb, #4882b1);--background-popup: rgba(0, 0, 0, .4);--color-dropdown: #ffffff;--border-dropdown: #aaa;--border-pagination: #d8dadb;--border-table: #c1c5c7;--text-primary: #2b2b2b;--text-secondary: #b3b3b3;--text-select: #868383;--border-top-left-select: #c3c5c7;--border-bottom-right-select: #eef0f1;--boxshadow-input: 5px 5px 14px rgb(0 0 0 / 40%)}@font-face{font-family:jost-bold;src:url(Jost-Bold.8121580d7b350d27.woff2);font-display:swap}@font-face{font-family:jost-semibold;src:url(Jost-SemiBold.361b864b6d68f373.woff2);font-display:swap}@font-face{font-family:jost-medium;src:url(Jost-Medium.d7ffb8b1ef6a404c.woff2);font-display:swap}@font-face{font-family:jost-regular;src:url(Jost-Regular.840e3e758f727b6a.woff2);font-display:swap}@font-face{font-family:jakarta-medium;src:url(PlusJakartaSans-Medium.14cecfcb2d3857ab.woff2);font-display:swap}@font-face{font-family:jakarta-italic;src:url(PlusJakartaSans-Italic.4fc2ec1d45744c10.woff2);font-display:swap}@font-face{font-family:jakarta-ultralight;src:url(PlusJakartaSans-ExtraLight.ed49c3af8fa129c8.woff2);font-display:swap}@font-face{font-family:jakarta-regular;src:url(PlusJakartaSans-Regular.b8d02305b050bbc3.woff2);font-display:swap}@font-face{font-family:jakarta-bold;src:url(PlusJakartaSans-Bold.c069c198540869ff.woff2);font-display:swap}@font-face{font-family:jakarta-semibold;src:url(PlusJakartaSans-SemiBold.0c310bc44338f2b4.woff2);font-display:swap}em{color:var(--class-primary);font-style:normal}*,body{margin:0}html{height:100%}
+
+
+/* ============================================================
+   AP-CENTER: REGLA UNIVERSAL FLOATING LABELS (BORDES LIMPIOS)
+   Evita que el label se sobreponga al texto ingresado.
+   ============================================================ */
+.input-container {
+    position: relative !important;
+}
+
+.input-container .input-title {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: 14px !important;
+    font-size: 14px !important;
+    color: #627d98 !important;
+    background-color: transparent !important;
+    padding: 0 4px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    max-width: calc(100% - 24px) !important;
+}
+
+/* Flota arriba entre el borde superior cuando tiene foco o valor */
+.input-container .input-text:focus ~ .input-title,
+.input-container .input-text:not(:placeholder-shown) ~ .input-title,
+.input-container .input-text.has-value ~ .input-title,
+.input-container .input-text.filled ~ .input-title,
+.input-container .input-title.filled {
+    top: -0.6em !important;
+    transform: none !important;
+    left: 10px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    color: #002d72 !important;
+    background-color: #ffffff !important;
+    padding: 0 6px !important;
+    border-radius: 4px !important;
+    opacity: 1 !important;
+}
+
+
+/* ============================================================
+   AP-CENTER: REGLA OFICIAL PAY-VALUE-SYMBOL ($ AZUL)
+   Muestra el icono $ a la izquierda dentro del input al escribir
+   o enfocar, con padding y centrado exacto segun diseño oficial.
+   ============================================================ */
+.pay-value-symbol {
+    position: absolute !important;
+    left: 14px !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 16px !important;
+    height: 16px !important;
+    pointer-events: none !important;
+    z-index: 3 !important;
+    display: none;
+}
+
+/* El input de valor a pagar expande su padding izquierdo cuando tiene texto o foco */
+.input-container input#valor\ a\ pagar,
+.input-container input[name="valor a pagar"],
+.value .input-container input.input-text {
+    transition: padding-left 0.2s ease !important;
+}
+
+.input-container input#valor\ a\ pagar:focus,
+.input-container input#valor\ a\ pagar.filled,
+.input-container input#valor\ a\ pagar.has-value,
+.input-container input#valor\ a\ pagar:not(:placeholder-shown),
+.input-container input[name="valor a pagar"]:focus,
+.input-container input[name="valor a pagar"].filled,
+.input-container input[name="valor a pagar"].has-value,
+.input-container input[name="valor a pagar"]:not(:placeholder-shown),
+.value .input-container input.input-text:focus,
+.value .input-container input.input-text.filled,
+.value .input-container input.input-text.has-value,
+.value .input-container input.input-text:not(:placeholder-shown) {
+    padding-left: 2.1rem !important;
+}
+
+/* Mostrar el simbolo $ cuando el input tenga foco, valor o clase filled / has-value */
+.input-container input#valor\ a\ pagar:focus ~ .pay-value-symbol,
+.input-container input#valor\ a\ pagar.filled ~ .pay-value-symbol,
+.input-container input#valor\ a\ pagar.has-value ~ .pay-value-symbol,
+.input-container input#valor\ a\ pagar:not(:placeholder-shown) ~ .pay-value-symbol,
+.input-container input[name="valor a pagar"]:focus ~ .pay-value-symbol,
+.input-container input[name="valor a pagar"].filled ~ .pay-value-symbol,
+.input-container input[name="valor a pagar"].has-value ~ .pay-value-symbol,
+.input-container input[name="valor a pagar"]:not(:placeholder-shown) ~ .pay-value-symbol,
+.value .input-container input.input-text:focus ~ .pay-value-symbol,
+.value .input-container input.input-text.filled ~ .pay-value-symbol,
+.value .input-container input.input-text.has-value ~ .pay-value-symbol,
+.value .input-container input.input-text:not(:placeholder-shown) ~ .pay-value-symbol {
+    display: block !important;
+}

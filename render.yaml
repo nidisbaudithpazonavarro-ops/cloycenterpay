@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: avalpay-center
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /
+    envVars:
+      - key: PHP_OPCACHE_ENABLE
+        value: "1"

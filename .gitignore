@@ -1,0 +1,16 @@
+node_modules/
+*.zip
+*.tar
+*.tar.gz
+.DS_Store
+._*
+__MACOSX/
+test_*.png
+test_*.html
+live_*.png
+live_*.html
+local_*.png
+debug_*.txt
+convenios_full.json
+**/uploads/*
+*.log

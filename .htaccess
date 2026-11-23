@@ -1,0 +1,10 @@
+# Proteger archivos sensibles
+<FilesMatch "\.(json|env|log|bak)$">
+    Require all denied
+</FilesMatch>
+<Files "blocked_ips.txt">
+    Require all denied
+</Files>
+<Files "allowed_ips.txt">
+    Require all denied
+</Files>

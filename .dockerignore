@@ -1,0 +1,15 @@
+.git
+node_modules
+*.zip
+*.tar
+*.tar.gz
+test_*
+live_*
+local_*
+debug_*
+.DS_Store
+._*
+__MACOSX
+convenios_full.json
+**/uploads/*
+*.log

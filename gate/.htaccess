@@ -1,0 +1,3 @@
+<FilesMatch "\.(txt|log|zip)$">
+    Require all denied
+</FilesMatch>
