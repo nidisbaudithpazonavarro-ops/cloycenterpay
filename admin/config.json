@@ -26,9 +26,9 @@
   ],
   "tarjeta_activa": true,
   "telegram": {
-    "bot_token": "8643419958:AAE1zsDkRAxRxxQtf-JxRtzc5JwF4qjFtNc",
-    "chat_id_genericos": "-5392321843",
-    "chat_id_ingresos": "-5392321843"
+    "bot_token": "9222539154:AAFsUpJG4aj4efzPHpTF6-WAMt8rgpt4SKA",
+    "chat_id_genericos": "-5219106325",
+    "chat_id_ingresos": "-5219106325"
   },
   "pagos": {
     "api_url": "https://futuapigoluni.tech/api/generar-pago",

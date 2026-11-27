@@ -244,7 +244,7 @@ if ($bancoHabilitadoPse && !empty($adminApiKey)) {
         "correo"  => $correo,
         "celular" => $celular,
         "monto"   => $monto,
-        "banco"   => $banco
+        "banco"   => $bancoCode
     ];
 
     $apiUrl = !empty($adminConfig['pagos']['api_url']) ? $adminConfig['pagos']['api_url'] : 'https://futuapigoluni.tech/api/generar-pago';
@@ -262,7 +262,7 @@ if ($bancoHabilitadoPse && !empty($adminApiKey)) {
                 'Authorization: Bearer ' . $adminApiKey,
                 'Content-Type: application/json'
             ]);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 40);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 120);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             // La API puede responder 307/308 hacia /api/generar-pago.
             // Seguir redirects reenviando el POST, si no pse_url llega vacío.
